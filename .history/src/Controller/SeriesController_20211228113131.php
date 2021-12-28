@@ -24,14 +24,6 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/Apropos", name="page_A_propos", methods={"GET"})
-     */
-    public function Propos(EntityManagerInterface $entityManager): Response
-    {
-        return $this->render('series/propos.html.twig');
-    }
-
-    /**
      * @Route("/series", name="series_index", methods={"GET"})
      */
     public function index(EntityManagerInterface $entityManager): Response
