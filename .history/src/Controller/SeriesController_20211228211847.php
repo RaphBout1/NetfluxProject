@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Series;
-use App\Entity\Season;
 use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,14 +34,13 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/series", name="series_poster", methods={"GET"})
+     * @Route("/series", name="series_test", methods={"GET"})
      */
     public function series(EntityManagerInterface $entityManager): Response
     {
         $series = $entityManager
             ->getRepository(Series::class)
             ->findAll();
-        
 
         return $this->render('series/show.html.twig', [
             'series' => $series,
@@ -78,18 +76,9 @@ class SeriesController extends AbstractController
      */
     public function show(Series $series): Response
     {
-        $em = $this -> getDoctrine()->getManager();
-        $repository = $em->getRepository(Season::class);
-        $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
-
         return $this->render('series/info.html.twig', [
             'series' => $series,
-            'seasons' => $season,
         ]);
-
-        $em2 = $this->getDoctrine()
-        ->getRepository(Season::class)
-        ->findAll();
     }
 
     /**
