@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Series;
-use App\Entity\Season;
 use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -82,7 +81,7 @@ class SeriesController extends AbstractController
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
 
-        return $this->render('series/info.html.twig', [
+        return $this->render('controleur_series/info.html.twig', [
             'series' => $series,
             'seasons' => $season,
         ]);

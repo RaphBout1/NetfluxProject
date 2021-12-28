@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Series{% endblock %}
+
+{% block body %}
+    <h1>Series</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ series.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ series.title }}</td>
+            </tr>
+            <tr>
+                <th>Plot</th>
+                <td>{{ series.plot }}</td>
+            </tr>
+            <tr>
+                <th>Imdb</th>
+                <td>{{ series.imdb }}</td>
+            </tr>
+            <tr>
+                <th>Poster</th>
+                <td><img src="{{path('controleur_poster_series_show', {'id':series.id})}}" /></td>
+
+            </tr>
+            <tr>
+                <th>Director</th>
+                <td>{{ series.director }}</td>
+            </tr>
+            <tr>
+                <th>YoutubeTrailer</th>
+                <td>{{ series.youtubeTrailer }}</td>
+            </tr>
+            <tr>
+                <th>Awards</th>
+                <td>{{ series.awards }}</td>
+            </tr>
+            <tr>
+                <th>YearStart</th>
+                <td>{{ series.yearStart }}</td>
+            </tr>
+            <tr>
+                <th>YearEnd</th>
+                <td>{{ series.yearEnd }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+        <h1>Les Saisons : </h1>
+        <h3>{% for season in seasons %}[{{season.number}}]{% endfor %}</h3>
+    </hr>
+
+    <a href="{{ path('series_poster') }}">back to list</a>
+
+   
+{% endblock %}

@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Series;
-use App\Entity\Season;
 use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Pagin
  */
 class SeriesController extends AbstractController
 {
-    
     /**
      * @Route("/", name="page_accueil", methods={"GET"})
      */
@@ -35,21 +33,19 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/series", name="series_poster", methods={"GET"})
+     * @Route("/series", name="series_index", methods={"GET"})
      */
-    public function series(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
+        
         $series = $entityManager
             ->getRepository(Series::class)
             ->findAll();
-        
 
-        return $this->render('series/show.html.twig', [
+        return $this->render('series/index.html.twig', [
             'series' => $series,
         ]);
-     }
-
-    
+    }
 
     /**
      * @Route("/series/new", name="series_new", methods={"GET", "POST"})
@@ -78,18 +74,9 @@ class SeriesController extends AbstractController
      */
     public function show(Series $series): Response
     {
-        $em = $this -> getDoctrine()->getManager();
-        $repository = $em->getRepository(Season::class);
-        $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
-
-        return $this->render('series/info.html.twig', [
+        return $this->render('series/show.html.twig', [
             'series' => $series,
-            'seasons' => $season,
         ]);
-
-        $em2 = $this->getDoctrine()
-        ->getRepository(Season::class)
-        ->findAll();
     }
 
     /**
@@ -123,12 +110,5 @@ class SeriesController extends AbstractController
         }
 
         return $this->redirectToRoute('series_index', [], Response::HTTP_SEE_OTHER);
-    }
-     /**
-     * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
-     */
-    public function poster(Series $series): Response
-    {
-        return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg', ));
     }
 }
