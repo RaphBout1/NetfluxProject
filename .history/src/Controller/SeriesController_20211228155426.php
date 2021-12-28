@@ -131,6 +131,6 @@ class SeriesController extends AbstractController
      */
     public function poster(Series $series): Response
     {
-        return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg', ));
+        return new Response(stream_get_contents($series->getPoster()), 120, array('content-type' => 'image/jpeg', ));
     }
 }
