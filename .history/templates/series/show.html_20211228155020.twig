@@ -8,10 +8,14 @@
     <table class="table">
         <tbody>
             {% for series in series %}
-            <div>
+           
+                
                 <h2>{{ series.title }}</h2>
-                <img src="{{path('controleur_poster_series_show', {'id':series.id})}}" />
-            </div>
+            
+            
+           
+                
+                <div><img src="{{path('controleur_poster_series_show', {'id':series.id})}}" /></div>
             
             {% endfor %}
         </tbody>

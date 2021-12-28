@@ -16,7 +16,6 @@ use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Pagin
  */
 class SeriesController extends AbstractController
 {
-    
     /**
      * @Route("/", name="page_accueil", methods={"GET"})
      */
@@ -32,20 +31,6 @@ class SeriesController extends AbstractController
     {
         return $this->render('series/propos.html.twig');
     }
-
-    /**
-     * @Route("/test", name="series_test", methods={"GET"})
-     */
-    public function series(EntityManagerInterface $entityManager): Response
-    {
-        $series = $entityManager
-            ->getRepository(Series::class)
-            ->findAll();
-
-        return $this->render('series/show.html.twig', [
-            'series' => $series,
-        ]);
-     }
 
     /**
      * @Route("/series", name="series_index", methods={"GET"})
@@ -125,12 +110,5 @@ class SeriesController extends AbstractController
         }
 
         return $this->redirectToRoute('series_index', [], Response::HTTP_SEE_OTHER);
-    }
-     /**
-     * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
-     */
-    public function poster(Series $series): Response
-    {
-        return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg', ));
     }
 }
