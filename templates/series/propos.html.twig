@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page Accueil{% endblock %}
- {% block stylesheets %}
- <link rel="stylesheet" href="CSS/apropos.css">
- {% endblock %}
- {% block body %}
- <div id="Apropos">
-    <h1>Page à propos</h1>
-
+{% block title %}Page Accueil
+{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('CSS/apropos.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+<div id="Apropos">
+	<h1>Page à propos</h1>
 
 
  <table class="tftable" border="1">
