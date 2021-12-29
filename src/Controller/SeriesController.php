@@ -41,8 +41,8 @@ class SeriesController extends AbstractController
     {
         $series = $entityManager
             ->getRepository(Series::class)
-            //->findAll();
-            ->findBy(array('yearStart' => '2010')); //pour test
+            ->findAll();
+            //->findBy(array('yearStart' => '2010')); //pour test
         
 
         return $this->render('series/show.html.twig', [
