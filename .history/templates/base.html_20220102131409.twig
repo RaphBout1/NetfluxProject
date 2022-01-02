@@ -10,10 +10,10 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-		<link href="{{ asset('CSS/header.css') }}" type="text/css" rel="stylesheet"/>
-
+		
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
+		<link href="{{ asset('CSS/base.css') }}" type="text/css" rel="stylesheet"/>
 		{% endblock %}
 
 		{% block javascripts %}
