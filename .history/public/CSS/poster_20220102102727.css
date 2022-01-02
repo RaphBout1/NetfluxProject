@@ -1,0 +1,51 @@
+#poster {
+  color: rgb(235, 230, 224);
+  padding: 3%;
+}
+
+#tablePoster {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+
+
+.imgLien {
+  height: 35vh;
+  text-align: center;
+  width: calc(100% / 6);
+  margin-top: 6vh;
+}
+
+.imgInfo {
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.imgLien:hover .imgInfo {
+  opacity: 0.1;
+}
+
+.textInfo {
+  visibility: hidden;
+  transition: transform 0.3s;
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.imgLien:hover .textInfo {
+    transform: translate(0,-100px);
+    visibility: visible;
+  }
+
+  @media (min-width: 800px) and (max-width: 1200px){
+    .imgLien {
+        width: calc(100% / 4);
+    }
+  }
+  @media (max-width: 800px){
+    .imgLien {
+        width: calc(100% / 2);
+    }
+  }
