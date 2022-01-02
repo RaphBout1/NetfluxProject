@@ -44,22 +44,29 @@ class SeriesController extends AbstractController
         $repository = $entityManager->getRepository(Series::class);
         if(isset($_GET['terme'])){
             $search = $_GET['terme']."%";
-        }
-        else{
-            $search = '%';
-        }
-        $series = $paginator->paginate(
-            $repository->findOneByName($search), /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            12 /*limit per page*/
-        );
-       
-
+            dump($search);
+            $series = $paginator->paginate(
+                $repository->findOneByName($search), /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/
+                10 /*limit per page*/
+            );
+           
+            if($search != "%"){
+                return $this->render('series/show.html.twig', [
+                    'series' => $series,
+                ]);
+            }
+        }else{
+            $entityManager = $this->getDoctrine()->getManager();
+        $s = $entityManager
+            ->getRepository(Series::class)
+            ->findAll();
+ 
         return $this->render('series/show.html.twig', [
-            'series' => $series,
+            'series' => $s,
         ]);
 
-        
+        }
     }
 
     /**
