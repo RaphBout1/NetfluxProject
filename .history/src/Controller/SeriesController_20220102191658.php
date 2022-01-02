@@ -51,12 +51,12 @@ class SeriesController extends AbstractController
         $series = $paginator->paginate(
             $repository->findOneByName($search), /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            12 /*limit per page*/
+            10 /*limit per page*/
         );
        
 
         return $this->render('series/show.html.twig', [
-            'series' => $series,
+            'series' => $s,
         ]);
 
         

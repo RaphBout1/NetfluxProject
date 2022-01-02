@@ -37,7 +37,7 @@ class SeriesRepository extends ServiceEntityRepository
     */
 
     // /**
-    //  * @return Query
+    //  * @return Series[] Returns an array of Series objects
     //  */
     
     public function findOneByName($value) 
@@ -47,7 +47,7 @@ class SeriesRepository extends ServiceEntityRepository
             ->setParameter('val', $value)
             ->orderBy('s.id', 'ASC')
             ->getQuery()
-            
+            ->getResult()
         ;
     }
     
