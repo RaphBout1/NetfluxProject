@@ -40,17 +40,15 @@ class SeriesController extends AbstractController
     public function series(EntityManagerInterface $entityManager): Response
     {
         $repository = $entityManager->getRepository(Series::class);
-        if(isset($_GET['terme'])){
-            $search = $_GET['terme']."%";
-            dump($search);
-            $series = $repository->findOneByName($search);
-            if($search != "%"){
-                return $this->render('series/show.html.twig', [
-                    'series' => $series,
-                ]);
-            }
-        }else{
-            $entityManager = $this->getDoctrine()->getManager();
+        $search = $_GET['terme']."%";
+        dump($search);
+        $series = $repository->findOneByName($search);
+        if($search != "%"){
+            return $this->render('series/show.html.twig', [
+                'series' => $series,
+            ]);
+        }
+        $entityManager = $this->getDoctrine()->getManager();
         $s = $entityManager
             ->getRepository(Series::class)
             ->findAll();
@@ -58,9 +56,32 @@ class SeriesController extends AbstractController
         return $this->render('series/show.html.twig', [
             'series' => $s,
         ]);
+     }
 
+ 
+public function get_series(Request $request){
+        $keyword = $request->get('keyword');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository(Series::class);
+
+        $series = $repository->findOneByName($keyword);
+        if(!empty($series)){
+            return $this->render('series/show.html.twig', [
+                'series' => $series,
+            ]);
         }
+        $entityManager = $this->getDoctrine()->getManager();
+        $s = $entityManager
+            ->getRepository(Series::class)
+            ->findAll();
+ 
+        return $this->render('series/show.html.twig', [
+            'series' => $s,
+        ]);
     }
+
+    
 
     /**
      * @Route("/series/new", name="series_new", methods={"GET", "POST"})
