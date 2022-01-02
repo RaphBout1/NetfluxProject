@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+	<link href="{{ asset('CSS/poster.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}Series
+
+{% endblock %}
+
+
+{% block body %}
+	<div id="poster">
+		<h1>Series</h1>
+		<div id="search">
+			<form action : {{ path('series_poster', {'search': $terme})}} >
+   			<input type = "text" name = "terme">
+   			<input type = "submit" name = "s" value = "Rechercher">
+  			</form>
+		</div>
+
+		<div id="tablePoster">
+
+			{% for series in series %}
+
+					<div class="imgLien">
+						<a href="{{ path('series_show', {'id': series.id}) }}"><img class="imgInfo" src="{{path('controleur_poster_series_show', {'id':series.id})}}"/></a>
+                        <p class="textInfo">{{ series.title }}</p>
+
+				</div>
+
+			{% endfor %}
+
+		</div>
+	</div>
+
+{% endblock %}
+

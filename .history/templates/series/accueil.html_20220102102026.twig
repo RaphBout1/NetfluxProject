@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Accueil
+{% endblock %}
+
+{% block body %}
+	<h1>Page d'accueil</h1>
+	<div id="search">
+			<form action : path'series_show' method = "get">
+   			<input type = "text" name = "terme">
+   			<input type = "submit" name = "s" value = "Rechercher">
+  			</form>
+		</div>
+
+	<p>en cours de construction
+	</p>
+	<a href="{{ path('series_index') }}">back to list</a>
+
+{% endblock %}
+
