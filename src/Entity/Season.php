@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Season
  *
  * @ORM\Table(name="season", indexes={@ORM\Index(name="IDX_F0E45BA95278319C", columns={"series_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SeasonRepository")
  */
 class Season
 {

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Series;
 use App\Entity\Season;
 use App\Form\SeriesType;
@@ -93,15 +94,20 @@ class SeriesController extends AbstractController
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
 
-        return $this->render('series/info.html.twig', [
+        $urlYoutube =$series->getYoutubeTrailer();
+        $arrayChaine=explode("/watch?v=",$urlYoutube);
+        $id_video=$arrayChaine[1];
+        
+        
+
+        return $this->render('series/infos.html.twig', [
+            'idvideo'=>$id_video,
             'series' => $series,
             'seasons' => $season,
         ]);
 
-        $em2 = $this->getDoctrine()
-        ->getRepository(Season::class)
-        ->findAll();
     }
+
 
     /**
      * @Route("/series/{id}/edit", name="series_edit", methods={"GET", "POST"})
@@ -141,5 +147,25 @@ class SeriesController extends AbstractController
     public function poster(Series $series): Response
     {
         return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg', ));
+    }
+    /**
+     * @Route("/episode/{id}", name="episode_show", methods={"GET"})
+     */
+    public function episodes(Season $seasons): Response
+    {
+        $em = $this -> getDoctrine()->getManager();
+        $repository = $em->getRepository(Episode::class);
+        $episodes = $repository->findBy(['season'=>$seasons->getId()],['number'=>'ASC']);
+        $data="<p class='episodes' id=".$seasons->getId().">";
+        foreach($episodes as $episode){
+            $data.=$episode->getNumber()." :".$episode->getTitle()."<br>";
+        }
+        $data.="</p>";
+
+
+        return new Response(
+            $data
+        );
+
     }
 }
