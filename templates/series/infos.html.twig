@@ -12,54 +12,51 @@
 
 {% block body %}
 	<div id="serieInfo">
-		<article>
-			<div id="infos">
-				<h2>{{ series.title }}</h2>
-				<p>{{ series.plot }}</p>
 
-				{% if series.director is not null%}
-					<p>
-						<b>Directeur :</b>
-						{{ series.director }}</p>
-				{% endif %}
-				{% if series.awards is not null%}
-					<p>
-						<b>Awards :</b>
-						{{ series.awards }}</p>
-				{% endif %}
-				{% if series.yearStart is not null%}
-					<p>
-						<b>YearStart :</b>
-						{{ series.yearStart }}</p>
-				{% endif %}
-				{% if series.yearEnd is not null%}
-					<p>
-						<b>YearEnd :</b>
-						{{ series.yearEnd }}</p>
-				{% endif %}
-				<div id="saisons">
-					<h2>Les Saisons :</h2>
+		<div id="infos">
+			<h2>{{ series.title }}</h2>
+			<p><i>{{ series.plot }}</i></p>
 
-					{% for season in seasons %}
-						<div class="saison">
-							<p class="titreSaison" onclick="afficher('{{season.id}}')">
-								<b>Saison:
-									{{season.number}}</b>
-							</p>
-							{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
-						</div>
-					{% endfor %}
-				</div>
+			{% if series.director is not null%}
+				<p>
+					<b>Directeur :</b>
+					{{ series.director }}</p>
+			{% endif %}
+			{% if series.awards is not null%}
+				<p>
+					<b>Awards :</b>
+					{{ series.awards }}</p>
+			{% endif %}
+			{% if series.yearStart is not null%}
+				<p>
+					<b>YearStart :</b>
+					{{ series.yearStart }}</p>
+			{% endif %}
+			{% if series.yearEnd is not null%}
+				<p>
+					<b>YearEnd :</b>
+					{{ series.yearEnd }}</p>
+			{% endif %}
+			<div id="saisons">
+				<h2>Les Saisons :</h2>
 
-
+				{% for season in seasons %}
+					<div class="saison">
+						<p >
+							<b class="titreSaison" onclick="afficher('{{season.id}}')">Saison:
+								{{season.number}}  ⓥ</b>
+						</p>
+						{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
+					</div>
+				{% endfor %}
 			</div>
 
-			<div id="trailer">
-				<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>
-			</div>
-		</article>
 
+		</div>
 
+		<div id="trailer">
+			<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>
+		</div>
 	</div>
 
 

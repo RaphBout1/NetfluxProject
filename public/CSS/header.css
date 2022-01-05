@@ -9,6 +9,7 @@
 body {
   width: 100%;
   background-color: rgb(14, 13, 13);
+  cursor:default;
 }
 #haut {
   height: 5vh;
