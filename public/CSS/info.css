@@ -1,0 +1,31 @@
+:root {
+  --taille: 65vw
+}
+
+#trailer {
+  border-radius: 20px;
+  overflow: hidden;
+  width: var(--taille);
+  height: calc(var(--taille) * 0.5628205128205128);
+
+}
+
+#trailer iframe {
+  object-fit: contain;
+  width: var(--taille);
+  height: calc(var(--taille) * 0.5628205128205128);
+
+}
+
+#infos {
+  width: calc(95vw - var(--taille));
+  color: rgb(235, 230, 224);
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  justify-content: space-around;
+}
+
+.episodes {
+  display: none;
+}
