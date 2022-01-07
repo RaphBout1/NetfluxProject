@@ -1,16 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page Accueil
+{% block title %}
+	Page Accueil
 {% endblock %}
 
-{% block body %}
-	<h1>Page d'accueil</h1>
-	
-	
+{% block stylesheets %}
+	<link href="{{ asset('CSS/acceuil.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
 
-	<p>en cours de construction
-	</p>
-	<a href="{{ path('series_poster') }}">back to list</a>
+{% block header %}{% endblock %}
+{% block body %}
+	<div id="acceuil">
+		<div id="titre">
+			<h1>N</h1>
+			<h1>E</h1>
+			<h1>T</h1>
+			<h1>F</h1>
+			<h1>L</h1>
+			<h1>U</h1>
+			<h1>X</h1>
+		</div>
+		<a href="{{ path('series_poster') }}"><span>C'est parti !</span></a>
+	</div>
+
 
 {% endblock %}
 

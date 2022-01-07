@@ -1,18 +1,27 @@
 #poster {
   color: rgb(235, 230, 224);
-  padding: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+  height: calc(95vh-20px);
+}
+
+#menuShearch{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 #tablePoster {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 84vh;
 }
 
 
 
 .imgLien {
-  height: 35vh;
+  height: 36vh;
   text-align: center;
   width: calc(100% / 6);
   margin-top: 6vh;
@@ -48,4 +57,21 @@
     .imgLien {
         width: calc(100% / 2);
     }
+  }
+
+  .navigation{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: rgb(221, 0, 0);
+  }
+
+  .navigation a {
+    color: rgb(235, 230, 224);
+    text-decoration: none;
+    
+  }
+
+  .navigation a:hover {
+text-decoration: underline;
   }
