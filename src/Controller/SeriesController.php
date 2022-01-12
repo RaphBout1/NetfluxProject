@@ -156,11 +156,11 @@ class SeriesController extends AbstractController
         $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository(Episode::class);
         $episodes = $repository->findBy(['season'=>$seasons->getId()],['number'=>'ASC']);
-        $data="<p class='episodes' id=".$seasons->getId().">";
+        $data="<div class='episodes' id=".$seasons->getId().">";
         foreach($episodes as $episode){
-            $data.=$episode->getNumber()." :".$episode->getTitle()."<br>";
+           $data.= "<div class='textNote'><p><b>E. ".$episode->getNumber()."</b> :".$episode->getTitle()."</p>   <a href='https://www.imdb.com/title/".$episode->getImdb()."'>".$episode->getImdbrating()."⭐</a></div>";
         }
-        $data.="</p>";
+        $data.="</div>";
 
 
         return new Response(

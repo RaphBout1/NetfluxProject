@@ -1,0 +1,35 @@
+body {
+color:rgb(235, 230, 224); 
+
+}
+
+#register{
+width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form {
+    width: 33vw;
+}
+input {
+    
+    width: 90%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: rgb(235, 230, 224);
+    padding: 7px ;
+    margin-top: 2vh;
+    background: transparent;
+    transition: 0.4s;
+    transition: border-color 0.5s;
+}
+
+
+input:focus {
+    border-image: linear-gradient(to right, rgb(153, 1, 1), rgb(221, 0, 0));
+    border-image-slice: 1;
+}

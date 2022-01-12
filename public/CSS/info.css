@@ -37,10 +37,38 @@ width:var(--taille) ;
 .episodes{
   display: none;
   transition: all .5s ease;
+
+}
+.textNote{
+  margin-top: 2px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
+.episodes p{
+    font-size: 0.8em;
+}
+.episodes b{
+  font-size: 1em;
+}
+
+a{
+  text-decoration: none;
+  color: rgb(235, 230, 224);;
+}
+
+a:hover {
+  color: rgb(221, 0, 0);
+}
 .titreSaison{
   cursor: pointer;
 }
+h3{
+  margin-top: 4px;
+}
 
+h3:hover{
+  color: rgb(221, 0, 0);
+}
 

@@ -1,0 +1,103 @@
+
+
+body {
+    color: rgb(235, 230, 224);
+
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+#formLogin {
+    margin-top: 10vh;
+    display: flex;
+    flex-direction: column;
+    width: 33vw;
+    height: 33vh;
+    padding: 35px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    text-align: center;
+
+}
+
+
+input {
+
+    width: 90%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: rgb(235, 230, 224);
+    padding: 7px ;
+    margin-top: 2vh;
+    background: transparent;
+    transition: 0.4s;
+    transition: border-color 0.5s;
+}
+
+
+input:focus {
+    border-image: linear-gradient(to right, rgb(153, 1, 1), rgb(221, 0, 0));
+    border-image-slice: 1;
+}
+
+.alert.alert-danger{
+    color: rgb(221, 0, 0);
+}
+.btn{
+    margin-top: 4vh;
+    width: 17vw;
+    height: 5vh;
+    background:rgb(235, 230, 224);
+    color:black;
+    transition: 0.2s;
+    font-weight: 600;
+    border: unset;
+}
+
+.btn:hover{
+    background-color:rgb(221, 0, 0) ;
+    color: rgb(235, 230, 224);
+}
+.btn:active{border-radius: 5px;}
+
+#new_account{
+    margin-top: 5vh;
+    align-items: center;
+    text-align: center;
+    width: 33vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: small;
+    
+    
+}
+#new_account p{
+
+    margin-bottom: 2vh;
+}
+#new_account a{
+    color:rgb(235, 230, 224);
+    text-decoration: none;
+    margin-top: 3vh;
+    font-size: medium;
+}
+
+#new_account a:hover{
+    color:rgb(221, 0, 0);
+}
+
+#new_account div{
+    width: 80%;
+    height: 1px;
+    background-color: rgba(235, 230, 224, 0.829);
+}
