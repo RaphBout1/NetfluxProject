@@ -10,16 +10,24 @@
 	<div id="register">
 		<h1>Créer un compte</h1>
 
-		{{ form_start(registrationForm) }}
-		{{ form_row(registrationForm.name ,{'attr': {'class': 'input'}}) }}
-		{{ form_row(registrationForm.email,{'attr': {'class': 'input'}}) }}
-		{{ form_row(registrationForm.country,{'attr': {'class': 'input'}}) }}
-		{{ form_row(registrationForm.plainPassword, {
-            label: 'Password' 
-        },{'attr': {'class': 'input'}}) }}
+		{{ form_start(registrationForm,{'attr': {'id': 'form'}}) }}
+		{#{{ form_label(registrationForm.name, false) }} #}
+		{{ form_row(registrationForm.name ,{'attr': {'placeholder': 'Prénom'}}) }}
 
-		{{ form_row(registrationForm.captcha) }}
+		{{ form_row(registrationForm.email,{'attr': {'placeholder': 'Email'}}) }}
+
+		<div id="pays">
+			{{ form_row(registrationForm.country) }}
+		</div>
+
+		{{ form_row(registrationForm.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
+
+		<div id="captcha">
+			{{ form_row(registrationForm.captcha, {'attr': {'placeholder': 'Captcha'}}) }}
+		</div>
+		<div id="bouton">
 		<button type="submit" class="btn">Register</button>
+		</div>
 		{{ form_end(registrationForm) }}
 	</div>
 {% endblock %}

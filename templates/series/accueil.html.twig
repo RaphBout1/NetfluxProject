@@ -20,7 +20,7 @@
 			<h1>U</h1>
 			<h1>X</h1>
 		</div>
-		<a href="{{ path('series_poster') }}"><span>C'est parti !</span></a>
+		<a href="{{ path('series_poster') }}"><span>C'est parti {% if app.user %} {{ app.user.name }} {% endif %} !</span></a>
 	</div>
 
 
