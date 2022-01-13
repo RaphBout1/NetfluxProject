@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('CSS/registration.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+	<div id="register">
+		<h1>Créer un compte</h1>
+
+		{{ form_start(registrationForm,{'attr': {'id': 'form'}}) }}
+		{#{{ form_label(registrationForm.name, false) }} #}
+		{{ form_row(registrationForm.name ,{'attr': {'placeholder': 'Prénom'}}) }}
+
+		{{ form_row(registrationForm.email,{'attr': {'placeholder': 'Email'}}) }}
+
+		<div id="pays">
+			{{ form_row(registrationForm.country) }}
+		</div>
+
+		{{ form_row(registrationForm.plainPassword, {'attr': {'placeholder': 'Mot de passe'}}) }}
+
+		<div id="captcha">
+			{{ form_row(registrationForm.captcha, {'attr': {'placeholder': 'Captcha'}}) }}
+		</div>
+		<div id="bouton">
+		<button type="submit" class="btn">Register</button>
+		</div>
+		{{ form_end(registrationForm) }}
+	</div>
+{% endblock %}
+
