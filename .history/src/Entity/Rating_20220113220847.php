@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Rating
@@ -25,10 +24,10 @@ class Rating
     /**
      * @var int
      *@Assert\Length(
-     *      min = 0,
-     *      max = 10,
-     *      minMessage = "the value muste be {{ limit }}  long",
-     *      maxMessage = "your not can not be more than {{ limit }} "
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
      * @ORM\Column(name="value", type="integer", nullable=false)
      */

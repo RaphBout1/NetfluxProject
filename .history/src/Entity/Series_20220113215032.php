@@ -348,7 +348,7 @@ class Series
 
     public function __toString()
 {
-  return $this->title;
+  return $this->ti;
 }
 
     
