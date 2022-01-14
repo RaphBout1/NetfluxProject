@@ -14,45 +14,51 @@
 	<div id="serieInfo">
 
 		<div id="infos">
-				<h2><a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a></h2>
+			<h2>
+				<a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a>
+			</h2>
 			<p>
 				<i>{{ series.plot }}</p>
-
-				{% if series.director is not null%}
-					<p>
-						<b>Directeur :</b>
-						{{ series.director }}</p>
-				{% endif %}
-				{% if series.awards is not null%}
-					<p>
-						<b>Awards :</b>
-						{{ series.awards }}</p>
-				{% endif %}
-				{% if series.yearStart is not null%}
-					<p>
-						<b>YearStart :</b>
-						{{ series.yearStart }}</p>
-				{% endif %}
-				{% if series.yearEnd is not null%}
-					<p>
-						<b>YearEnd :</b>
-						{{ series.yearEnd }}</p>
-				{% endif %}
-				<div id="saisons">
-					<h2>Les Saisons :</h2>
-
-					{% for season in seasons %}
-						<div class="saison">
-							<p>
-								<h3 class="titreSaison" onclick="afficher('{{season.id}}')">Saison:
-									{{season.number}}
-									ⓥ</h3>
-							</p>
-							{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
-						</div>
-					{% endfor %}
-				</div>
 			</p>
+			{% if series.director is not null%}
+				<p>
+					<b>Directeur :</b>
+					{{ series.director }}</p>
+			{% endif %}
+			{% if series.awards is not null%}
+				<p>
+					<b>Awards :</b>
+					{{ series.awards }}</p>
+			{% endif %}
+			{% if series.yearStart is not null%}
+				<p>
+					<b>YearStart :</b>
+					{{ series.yearStart }}</p>
+			{% endif %}
+			{% if series.yearEnd is not null%}
+				<p>
+					<b>YearEnd :</b>
+					{{ series.yearEnd }}</p>
+			{% endif %}
+			<div id="saisons">
+				<h2>Les Saisons :</h2>
+
+				{% for season in seasons %}
+					<div class="saison">
+						<p>
+							<h3 class="titreSaison" onclick="afficher('{{season.id}}')">Saison:
+								{{season.number}}
+								ⓥ</h3>
+						</p>
+						{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
+					</div>
+				{% endfor %}
+			</div>
+			{% if app.user %}
+				<a href={{ path('rating_new') }}>
+					Donnez un avis
+				</a>
+			{% endif %}
 		</div>
 
 		<div id="trailer">

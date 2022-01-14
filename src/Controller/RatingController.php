@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Rating;
 use App\Form\RatingType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,8 @@ class RatingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($rating);
             $entityManager->flush();
+            //$rating->setDate(new DateTime());
+            //$rating->setUser($this->get('security.context')->getToken()->getUser());
 
             return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
