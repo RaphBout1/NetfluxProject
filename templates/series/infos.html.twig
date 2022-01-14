@@ -11,35 +11,9 @@
 {% endblock %}
 
 {% block body %}
-	<div id="serieInfo">
+	<div id="InfosSerie">
 
-		<div id="infos">
-			<h2>
-				<a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a>
-			</h2>
-			<p>
-				<i>{{ series.plot }}</p>
-			</p>
-			{% if series.director is not null%}
-				<p>
-					<b>Directeur :</b>
-					{{ series.director }}</p>
-			{% endif %}
-			{% if series.awards is not null%}
-				<p>
-					<b>Awards :</b>
-					{{ series.awards }}</p>
-			{% endif %}
-			{% if series.yearStart is not null%}
-				<p>
-					<b>YearStart :</b>
-					{{ series.yearStart }}</p>
-			{% endif %}
-			{% if series.yearEnd is not null%}
-				<p>
-					<b>YearEnd :</b>
-					{{ series.yearEnd }}</p>
-			{% endif %}
+		<div id="saisonRating">
 			<div id="saisons">
 				<h2>Les Saisons :</h2>
 
@@ -54,15 +28,54 @@
 					</div>
 				{% endfor %}
 			</div>
-			{% if app.user %}
-				<a href={{ path('rating_new') }}>
-					Donnez un avis
-				</a>
-			{% endif %}
+			<div id="rating">
+				{% if app.user %}
+
+					<a href="{{ path('rating_new' , {'id': series.id}) }}">Donner votre avis</a>
+				{% else %}
+					<a href="{{ path('app_login') }}">Connecter vous pour donner votre avis sur la série</a>
+				{% endif %}
+			</div>
 		</div>
 
-		<div id="trailer">
-			<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>
+
+		<div id="plotTrailer">
+
+			<div id="infos">
+				<h2>
+					<a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a>
+				</h2>
+				<p>
+					<i>{{ series.plot }}</p>
+				</p>
+				{% if series.director is not null%}
+					<p>
+						<b>Directeur :</b>
+						{{ series.director }}</p>
+				{% endif %}
+				{% if series.awards is not null%}
+					<p>
+						<b>Awards :</b>
+						{{ series.awards }}</p>
+				{% endif %}
+				{% if series.yearStart is not null%}
+					<p>
+						<b>YearStart :</b>
+						{{ series.yearStart }}</p>
+				{% endif %}
+				{% if series.yearEnd is not null%}
+					<p>
+						<b>YearEnd :</b>
+						{{ series.yearEnd }}</p>
+				{% endif %}
+			</div>
+
+
+
+
+			<div id="trailer">
+				<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>
+			</div>
 		</div>
 	</div>
 

@@ -19,7 +19,7 @@ class RatingType extends AbstractType
                 'multiple' => false
             ))
             ->add('comment')
-            ->add('user')
+            //->add('user')
             ->add('date')
             ->add('series');
 

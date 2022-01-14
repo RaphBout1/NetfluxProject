@@ -1,10 +1,22 @@
-:root{
-  --taille:65vw
+:root {
+  --taille: 65vw
 }
 
-
-#serieInfo{
+#InfosSerie {
+  display: flex;
+  flex-direction: column-reverse;
   color: rgb(235, 230, 224);
+}
+
+#plotTrailer {
+
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  justify-content: space-around;
+}
+
+#saisonRating{
   display: flex;
   flex-direction: row;
   vertical-align: middle;
@@ -14,61 +26,82 @@
 #trailer {
   border-radius: 20px;
   overflow: hidden;
-  width:var(--taille) ;
+  width: var(--taille);
   height: calc(var(--taille) * 0.5628205128205128);
-  
+
 }
 
 #trailer iframe {
-object-fit: contain;
-width:var(--taille) ;
+  object-fit: contain;
+  width: var(--taille);
   height: calc(var(--taille) * 0.5628205128205128);
-  
+
+}
+#saisons{
+  width: 35vw;
+}
+#rating {
+  width: 60vw;
 }
 
-#infos{
- width: calc(95vw - var(--taille));
- color: rgb(235, 230, 224);
+#infos {
+  width: calc(95vw - var(--taille));
+  color: rgb(235, 230, 224);
   display: flex;
   flex-direction: column;
 
 }
 
-.episodes{
+h2{
+  font-size: 2.6vh;
+}
+h3{
+  font-size: 2.2vh;
+}
+#infos p{
+font-size: 2vh;
+}
+
+.episodes {
   display: none;
   transition: all .5s ease;
 
 }
-.textNote{
+
+.textNote {
   margin-top: 2px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.episodes p{
-    font-size: 0.8em;
-}
-.episodes b{
-  font-size: 1em;
+.episodes p {
+  font-size: 1.2vh;
 }
 
-a{
+.episodes b {
+  font-size: 1.4vh;
+}
+
+a {
   text-decoration: none;
-  color: rgb(235, 230, 224);;
+  color: rgb(235, 230, 224);
 }
-
+#saisons a{
+  font-size:1.2vh ;
+}
 a:hover {
   color: rgb(221, 0, 0);
 }
-.titreSaison{
+
+.titreSaison {
   cursor: pointer;
 }
-h3{
+
+h3 {
   margin-top: 4px;
 }
 
-h3:hover{
+h3:hover {
   color: rgb(221, 0, 0);
 }
-

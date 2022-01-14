@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Rating;
+use App\Entity\Series;
 use App\Form\RatingType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/rating')]
 class RatingController extends AbstractController
@@ -26,18 +28,23 @@ class RatingController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'rating_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'rating_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, Series $id): Response
     {
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $rating->setUser($this->getUser());
+            $rating->setDate(new DateTime());
+            //$rating->setSeries(DbContext.Series.Where(e => e.Id == id));
             $entityManager->persist($rating);
             $entityManager->flush();
-            //$rating->setDate(new DateTime());
-            //$rating->setUser($this->get('security.context')->getToken()->getUser());
+
+
+
+
 
             return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -77,7 +84,7 @@ class RatingController extends AbstractController
     #[Route('/{id}', name: 'rating_delete', methods: ['POST'])]
     public function delete(Request $request, Rating $rating, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$rating->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $rating->getId(), $request->request->get('_token'))) {
             $entityManager->remove($rating);
             $entityManager->flush();
         }
