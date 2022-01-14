@@ -38,7 +38,9 @@
     					{{ include('rating/_form.html.twig') }}
 
     				<a href="{{ path('rating_index') }}">back to list</a>
-     				
+     				{% else %}
+    				 <h1>Vous n'avez pas accès à cette page</h1>
+
 					<h1>Rating index</h1>
 
 						<table class="table">

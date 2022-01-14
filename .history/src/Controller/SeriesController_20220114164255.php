@@ -108,9 +108,7 @@ class SeriesController extends AbstractController
         }
         $ratings = $entityManager
             ->getRepository(Rating::class)
-            ->findBy(
-                ['series' => $series],
-            );
+            ->findAll();
 
         
         $em = $this -> getDoctrine()->getManager();

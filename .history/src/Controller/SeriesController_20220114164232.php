@@ -106,12 +106,6 @@ class SeriesController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
-        $ratings = $entityManager
-            ->getRepository(Rating::class)
-            ->findBy(
-                ['series' => $series],
-            );
-
         
         $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
@@ -129,7 +123,6 @@ class SeriesController extends AbstractController
             'seasons' => $season,
             'rating' => $rating,
             'form' => $form->createView(),
-            'ratings' => $ratings,
         ]);
 
     }

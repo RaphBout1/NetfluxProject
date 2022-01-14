@@ -38,38 +38,9 @@
     					{{ include('rating/_form.html.twig') }}
 
     				<a href="{{ path('rating_index') }}">back to list</a>
-     				
-					<h1>Rating index</h1>
-
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Id</th>
-									<th>Value</th>
-									<th>Comment</th>
-									<th>Date</th>
-									<th>actions</th>
-								</tr>
-							</thead>
-							<tbody>
-							{% for rating in ratings %}
-								<tr>
-									<td>{{ rating.id }}</td>
-									<td>{{ rating.value }}</td>
-									<td>{{ rating.comment }}</td>
-									<td>{{ rating.date ? rating.date|date('Y-m-d H:i:s') : '' }}</td>
-									<td>
-										<a href="{{ path('rating_show', {'id': rating.id}) }}">show</a>
-										<a href="{{ path('rating_edit', {'id': rating.id}) }}">edit</a>
-									</td>
-								</tr>
-							{% else %}
-								<tr>
-									<td colspan="5">no records found</td>
-								</tr>
-							{% endfor %}
-							</tbody>
-						</table>
+     				{% else %}
+    				 <h1>Vous n'avez pas accès à cette page</h1>
+					 
      			{% endif %}
 				{% else %}
 					<a href="{{ path('app_login') }}">Connecter vous pour donner votre avis sur la série</a>

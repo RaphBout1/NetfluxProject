@@ -108,11 +108,11 @@ class SeriesController extends AbstractController
         }
         $ratings = $entityManager
             ->getRepository(Rating::class)
-            ->findBy(
-                ['series' => $series],
-            );
+            ->findAll();
 
-        
+        return $this->render('rating/index.html.twig', [
+            'ratings' => $ratings,
+        ]);
         $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
@@ -129,7 +129,6 @@ class SeriesController extends AbstractController
             'seasons' => $season,
             'rating' => $rating,
             'form' => $form->createView(),
-            'ratings' => $ratings,
         ]);
 
     }

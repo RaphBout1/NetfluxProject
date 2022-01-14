@@ -32,13 +32,15 @@
 				{% if app.user %}
 
 					<a href="{{ path('rating_new' , {'id': series.id}) }}">Donner votre avis</a>
-					{% if app.user %}
+					
     				<h1>Create new Rating</h1>
 
     					{{ include('rating/_form.html.twig') }}
 
     				<a href="{{ path('rating_index') }}">back to list</a>
-     				
+     				{% else %}
+    				 <h1>Vous n'avez pas accès à cette page</h1>
+
 					<h1>Rating index</h1>
 
 						<table class="table">
