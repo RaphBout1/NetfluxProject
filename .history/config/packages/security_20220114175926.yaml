@@ -6,7 +6,8 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
          
-        users_in_memory: { memory: null }
+        users_in_memory: { memory: 
+            }
         app_user_provider:
             entity:
                 class: App\Entity\User

@@ -5,8 +5,10 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-         
-        users_in_memory: { memory: null }
+        in_memo
+        users_in_memory: { 
+            admin : {password: adminpass, roles:['ROLE_ADMIN']}
+         }
         app_user_provider:
             entity:
                 class: App\Entity\User

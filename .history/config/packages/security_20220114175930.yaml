@@ -6,7 +6,10 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
          
-        users_in_memory: { memory: null }
+        users_in_memory: { memory: 
+            
+                users:
+                    admin : {password: adminpass, roles:['ROLE_ADMIN']}}
         app_user_provider:
             entity:
                 class: App\Entity\User

@@ -30,9 +30,9 @@
 
 					<a href="{{ path('page_A_propos') }}">A propos</a>
 					<a href="{{ path('series_poster') }}">Series</a>
-					{% if app.user%}
-						{% if app.user.Admin == 1 %}
-							<a href="{{ path('rating_index') }}">Admin</a>
+					{% if app.user}
+						if app.user.Admin == 1{}
+							<a href="{{ path('series_poster') }}">Admin</a>
 						{% endif %}
 					{% endif %}
 
