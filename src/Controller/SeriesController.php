@@ -19,7 +19,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use App\Entity\Rating;
 use App\Form\RatingType;
-use App\Service\calculMoyenne;
 use DateTime;
 
 /**
@@ -54,11 +53,8 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series", name="series_poster", methods={"GET"})
      */
-    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request, calculMoyenne $calculMoyenne): Response
+    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
     {
-        $calculMoyenne->setMoyenne($entityManager);
-        
-        ### gere la recherche
         $repository = $entityManager->getRepository(Series::class);
         if (isset($_GET['terme'])) {
             $search = $_GET['terme'] . "%";
@@ -76,9 +72,6 @@ class SeriesController extends AbstractController
             'series' => $series,
         ]);
     }
- 
-    
-    
 
     /**
      * @Route("/series/add/{imdbID}", name="serie_add", methods={"GET", "POST"})
@@ -116,11 +109,8 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series/{id}", name="series_show", methods={"GET","POST"})
      */
-    public function show(Series $series,Request $request, EntityManagerInterface $entityManager, calculMoyenne $calculMoyenne): Response
+    public function show(Series $series,Request $request, EntityManagerInterface $entityManager): Response
     {
-        
-        $calculMoyenne->setMoyenne($entityManager);
-        
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
@@ -139,9 +129,6 @@ class SeriesController extends AbstractController
             ->findBy(
                 ['series' => $series],
             );
-        
-        $moyenne = $series->getnoteUser();
-        echo($moyenne);
 
         
         $em = $this -> getDoctrine()->getManager();
@@ -159,7 +146,6 @@ class SeriesController extends AbstractController
             'rating' => $rating,
             'form' => $form->createView(),
             'ratings' => $ratings,
-            'moyenne' => $moyenne,
         ]);
 
 
@@ -256,10 +242,6 @@ class SeriesController extends AbstractController
 
 
     }
-    /**
-     * @Route("/calul/", name="calcul_moyenne", methods={"GET"})
-     */
-    
 
     
 }

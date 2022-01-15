@@ -24,12 +24,6 @@ class Series
     private $id;
 
     /**
-     * @var float
-     * 
-     */
-    public $noteUser;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=128, nullable=false)
@@ -323,15 +317,6 @@ class Series
         }
 
         return $this;
-    }
-    /**
-     * @return float
-     */
-    public function getnoteUser(){
-        return $this->noteUser;
-    }
-    public function setnoteUser(float $value){
-        $this->noteUser = $value;
     }
 
     /**
