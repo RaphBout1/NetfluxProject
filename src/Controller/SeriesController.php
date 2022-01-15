@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\calculMoyenne;
+
 use App\Service\CallApiService;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
@@ -67,8 +69,11 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series", name="series_poster", methods={"GET"})
      */
-    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
+    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request, calculMoyenne $calculMoyenne): Response
     {
+        $calculMoyenne->setMoyenne($entityManager);
+
+
         $repository = $entityManager->getRepository(Series::class);
         if (isset($_GET['terme'])) {
             $search = $_GET['terme'] . "%";
@@ -116,8 +121,10 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series/{id}", name="series_show", methods={"GET","POST"})
      */
-    public function show(Series $series,Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Series $series, Request $request, EntityManagerInterface $entityManager, calculMoyenne $calculMoyenne): Response
     {
+        $calculMoyenne->setMoyenne($entityManager);
+
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
@@ -127,7 +134,7 @@ class SeriesController extends AbstractController
             $rating->setDate(new DateTime());
             $rating->setSeries($series);
             $entityManager->persist($rating);
-            
+
             $entityManager->flush();
         }
         $ratings = $entityManager
@@ -135,9 +142,12 @@ class SeriesController extends AbstractController
             ->findBy(
                 ['series' => $series],
             );
+        $moyenne = $series->getnoteUser();
+        echo ($moyenne);
 
-        
-        $em = $this -> getDoctrine()->getManager();
+
+
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series' => $series->getId()], ['number' => 'ASC']);
 
@@ -152,9 +162,8 @@ class SeriesController extends AbstractController
             'rating' => $rating,
             'form' => $form->createView(),
             'ratings' => $ratings,
+            'moyenne' => $moyenne,
         ]);
-
-
     }
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
@@ -206,14 +215,10 @@ class SeriesController extends AbstractController
         $repository = $entityManager->getRepository(Episode::class);
         //$episodes = $repository->findBySeason($id);
         $episodes = $repository->findBy(['season' => $id->getId()], ['number' => 'ASC']);
-     
+
         return $this->render('series/episode.html.twig', [
             'episodes' => $episodes,
             'season' => $id,
         ]);
-
-
     }
-
-    
 }
