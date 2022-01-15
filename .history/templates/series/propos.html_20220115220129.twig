@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Accueil
+{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('CSS/apropos.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+<div id="Apropos">
+	<h1>Agathe Domenger & Raphael Boutin</h1>
+
+
+ <table class="tftable" border="1">
+        <thead>
+            <tr>
+                <th width="500px">Fonctionnalité</td>
+                <th>Pas&nbsp;abordée</td>
+                <th>Pas&nbsp;terminée</td>
+                <th>Fonctionnelle</td>
+                <th>Commentaire (éventuel)</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Une page d'accueil présentant le site</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td> toudouuuuum !! Netflux est votre futur application de suivi de series^^</td>
+            </tr>
+            <tr>
+                <th>Un menu facilitant la navigation dans le site</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td> cliquez sur Netflux pour vivre une aventure digne des plus grands films !!
+                 <br>la page A propos vous permet d'en apprendre un peu plus </td>
+            </tr>
+            <tr>
+                <th>Une page "à propos", décrivant le travail réalisé et précisant
+                    la liste des auteurs du site (le binôme), et éventuellement les
+                    difficultés rencontrées (ainsi que ce tableau)</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Une page présentant l'ensemble des séries de la base de
+                    données, l'affichage doit être paginé et il doit être possible de
+                    rechercher des séries</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td> la barre de recherche s'affiche lorsque l'on passe sur la loupe</td>
+            </tr>
+            <tr>
+                <th>La possibilité de naviguer dans les saisons d'une série, puis dans les épisodes</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Chaque fois que c'est pertinent on affichera le poster de la série</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Chaque fois que c'est pertinent on affichera le trailer <em>YouTube</em></th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Chaque fois que c'est pertinent on affichera un lien vers la fiche <em>IMDB</em> de la série ou de l'épisode
+                </th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td>L'IMDB est disponible en lien en cliquant <br>sur le titre d'une série ou sur la note des épisode</td>
+            </tr>
+            <tr>
+                <th>La possibilité pour un utilisateur de s'inscrire et de se connecter avec un suivi de session</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Respect des mesures classiques de sécurité (mot de passe non stocké en clair, CAPTCHA à
+                    l'inscription...)</th>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>En étant inscrit et connecté seulement, possibilité de noter
+                    une série, en ajoutant éventuellement un commentaire optionnel (table
+                    <kbd>rating</kbd>)</th>
+                <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>En étant inscrit et connecté seulement, possibilité de classer
+                    les séries par note moyenne croissante ou décroissante (en utilisant les
+                    notes postées par les utilisateurs du site)</th>
+                <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>En étant inscrit et connecté seulement, possibilité de
+                    "suivre" des séries (à l'aide de la table  <kbd>user_series</kbd> ) et ces séries
+                    sont accessibles</td>
+                <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>En étant inscrit et connecté seulement, possibilité de marquer
+                    un épisode comme vu ou non vu. De cette manière, l'utilisateur doit
+                    pouvoir visualiser où il en est dans le visionnage d'une série. Il est
+                    pertinent de remonter l'information dans la page "saisons"</th>
+                   <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Un utilisateur administrateur doit pouvoir modérer les commentaires en les supprimant</th>
+                <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Un administrateur devrait pouvoir incorporer des nouvelles séries dans la base de données à l'aide de l'API <em>OMDB</em></th>
+                <td><input class="check" type="checkbox"checked></td>
+                <td><input class="check" type="checkbox"></td>
+                <td><input class="check" type="checkbox"></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

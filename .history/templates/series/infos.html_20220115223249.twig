@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Series
+{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('CSS/info.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('infos.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	<div id="InfosSerie">
+
+		<div id="saisonRating">
+			<div id="saisons">
+				<h2>Les Saisons :</h2>
+
+				{% for season in seasons %}
+					<div class="saison">
+						<p>
+							<h3 class="titreSaison" onclick="afficher('{{season.id}}')">Saison:
+								{{season.number}}
+								ⓥ</h3>
+						</p>
+						<div id="{{season.id}}" class="episodes">
+							{{ render(controller('App\\Controller\\SeriesController::episodes', {'id': season})) }}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<div id="rating">
+
+
+				{% if app.user %}
+					<div id="newComment">
+						<h1>Comenter :</h1>
+
+						{{ include('rating/_form.html.twig') }}
+
+
+					</div>
+				{% else %}
+					<a href="{{ path('app_login') }}">Connecter vous pour donner votre avis sur la série</a>
+				{% endif %}
+				
+
+
+				<table class="table">
+
+					<tbody>
+					{%if %}
+						{% for rating in ratings %}
+							<tr>
+								<td id="date">{{ rating.date ? rating.date|date('j F Y ') : ' ' }}</td>
+								<td>{{ rating.value }}
+									⭐</td>
+								<td id="commentaire">{{ rating.comment }}</td>
+
+							</tr>
+							{% else %}
+
+						{% endfor %}
+					</tbody>
+				</table>
+
+
+			</div>
+		</div>
+
+		<div id="titreSuivre">
+			<h2>
+				<a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a>
+			</h2>
+			<div id="boutonSuivre">
+
+				{% if app.user %}
+
+					<form action="{{ path('suivre_serie', {'id': series.id}) }}" method="post" class="suivre">
+						<input type="submit" class="btn" value="{% if app.user.SerieSuivis(app.user, series) %}Ne plus suivre{% else %}Suivre{% endif %}">
+					</form>
+				{% endif %}
+			</div>
+		</div>
+
+
+		<div id="plotTrailer">
+
+			<div id="infos">
+
+				<p>
+					<i>{{ series.plot }}</p>
+					{% if series.director is not null%}
+						<p>
+							<b>Directeur :</b>
+							{{ series.director }}</p>
+					{% endif %}
+					{% if series.awards is not null%}
+						<p>
+							<b>Awards :</b>
+							{{ series.awards }}</p>
+					{% endif %}
+					{% if series.yearStart is not null%}
+						<p>
+							<b>YearStart :</b>
+							{{ series.yearStart }}</p>
+					{% endif %}
+					{% if series.yearEnd is not null%}
+						<p>
+							<b>YearEnd :</b>
+							{{ series.yearEnd }}</p>
+					{% endif %}
+				</p>
+			</div>
+
+
+			<div id="trailer">
+				<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>
+			</div>
+		</div>
+
+	</div>
+
+
+{% endblock %}
+

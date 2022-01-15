@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+
+{% block stylesheets %}
+	<link href="{{ asset('CSS/poster.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}User
+
+{% endblock %}
+{% block body %}
+	
+		<div id="user">
+		{% if app.user %}
+			<div id="mesSerie">
+				<div id="deconnexion">
+					<h2>Mes Series :</h2>
+					<a class="btn" href="{{ path('app_logout') }}">Se déconnecter</a>
+				</div>
+				<div id="tablePoster">
+					{% for series in series %}
+
+						<div class="imgLien">
+							<a href="{{ path('series_show', {'id': series.id}) }}"><img class="imgInfo" src="{{path('controleur_poster_series_show', {'id':series.id})}}"/></a>
+							<p class="textInfo">{{ series.title }}</p>
+
+						</div>
+
+					{% endfor %}
+				</div>
+			</div>
+
+		{% else %}
+			<a href="{{ path('app_login') }}">Se connecter</a>
+		{% endif %}
+	</div>
+	{# display navigation #}
+		<div class="navigation">
+			{{ knp_pagination_render(series) }}
+		</div>
+{% endblock %}
+

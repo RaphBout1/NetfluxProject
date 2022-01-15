@@ -44,12 +44,14 @@
 				{% else %}
 					<a href="{{ path('app_login') }}">Connecter vous pour donner votre avis sur la série</a>
 				{% endif %}
-				<h1>Commentaires :</h1>
+				
 
 
 				<table class="table">
 
 					<tbody>
+					{% if ratings != null%}
+						<h1>Commentaires :</h1>
 						{% for rating in ratings %}
 							<tr>
 								<td id="date">{{ rating.date ? rating.date|date('j F Y ') : ' ' }}</td>
@@ -61,6 +63,7 @@
 							{% else %}
 
 						{% endfor %}
+					{% endif %}
 					</tbody>
 				</table>
 
