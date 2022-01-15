@@ -1,80 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Rating index{% endblock %}
+{% block title %}Admin
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('CSS/admin.css') }}" type="text/css" rel="stylesheet"/>
+{% endblock %}
 
 {% block body %}
-    <h1>Rating index</h1>
+	{% if app.user.Admin == 1 %}
+		<div id="admin">
+			<h1>Commentaires :</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>serie</th>
-                <th>Value</th>
-                <th>Comment</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for rating in ratings %}
-            <tr>
-                <td>{{ rating.getSeries().title }}</td>
-                <td>{{ rating.value }}</td>
-                <td>{{ rating.comment }}</td>
-                <td>{{ rating.date ? rating.date|date('Y-m-d') : '' }}</td>
-                <td>
-                    <form method="post" action="{{ path('rating_delete', {'id': rating.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rating.id) }}">
-                    <button class="btn">Delete</button>
-</form>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <h1> vous voulez ajouter une serie ?</h1>
+			<table class="table">
+				<tbody>
+					{% for rating in ratings %}
+						<tr>
+							<td>{{ rating.getSeries().title }}</td>
+							<td>{{ rating.value }}
+								⭐</td>
+							<td>{{ rating.comment }}</td>
+							<td>{{ rating.date ? rating.date|date('Y-m-d') : '' }}</td>
+							<td>
+								<form method="post" action="{{ path('rating_delete', {'id': rating.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rating.id) }}">
+									<button class="btn">Supprimer</button>
+								</form>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="5">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<h1>
+				Voulez-vous ajouter une serie ?</h1>
 
-    <div id="search">
+			<div id="search">
 				<form action : path'series_poster' method="get">
-					<input type="text" name="imdbID">
-					<input type="submit" value="Rechercher">
+					<input type="text" name="imdbID" placeholder="Identifiant">
+					<input type="submit" class="btn" value="Rechercher">
 				</form>
-    </div>
-    {% if idnonvalide %}
-        <p> l'ID rentré n'est pas un ID valide </p>
+			</div>
+			{% if idnonvalide %}
+				<p>
+					l'ID rentré n'est pas un ID valide
+				</p>
 
-    {% endif %}
-    {% if serieValide %}
-        <h1>{{addSerie.Title}}</h1>
+			{% endif %}
+			{% if serieValide %}
+				<div id="newSerie">
+					<div id="info">
+						<h1>{{addSerie.Title}}</h1>
 
-        <p> description : {{addSerie.Plot}}</p>
-        <p>Années : {{addSerie.Year}}</p>
-         <p>le Poster</p>
-        <img class="imgInfo" src={{addSerie.Poster}} />
-        <br>
-        <a>id IMBD : {{addSerie.imdbID}}</a>
-        <br>
-        <a> Directeurs : {{addSerie.Director}}</a>
-        <br>
-        <a>Awards : {{addSerie.Awards}}</a>
-        <br>
-        <p>Acteurs : {{addSerie.Actors}}</p>
-        <br>
-        <p>Pays : {{addSerie.Country}}</p>
-
-    
-        <form method="post" action="{{ path('serie_add', {'imdbID':addSerie.imdbID}) }}" onsubmit="return confirm('Are you sure you want to add this serie ?');">
-                        <input type="hidden" name="_token">
-                        <button class="btn">add this serie</button>
-
-    {% endif %}
+						<p>
+							<b>Description :</b>
+							{{addSerie.Plot}}</p>
+						<p>
+							<b>Années :</b>
+							{{addSerie.Year}}</p>
 
 
+						<p>
+							<b>id IMBD :</b>
+							{{addSerie.imdbID}}</p>
+						<br>
+						<p>
+							<b>Directeurs :</b>
+							{{addSerie.Director}}</p>
+						<br>
+						<p>
+							<b>Awards :</b>
+							{{addSerie.Awards}}</p>
+						<br>
+						<p>
+							<b>Acteurs :</b>
+							{{addSerie.Actors}}</p>
+						<br>
+						<p>
+							<b>Pays :</b>
+							{{addSerie.Country}}</p>
+
+						<form method="post" action="{{ path('serie_add', {'imdbID':addSerie.imdbID}) }}" onsubmit="return confirm('Are you sure you want to add this serie ?');">
+							<input type="hidden" name="_token">
+							<button class="btn">add this serie</button>
+						</form>
+					</div>
 
 
-    {#<a href="{{ path('rating_new', {'id': serie.id}) }}">Create new</a>#}
+					<img class="imgInfo" src={{addSerie.Poster}}/>
+
+
+			{% endif %}
+	{% else %}
+		<h1>Vous n'avez pas le droit de voir cette page</h1>
+	{% endif %}
+
+		        </div>
+	    </div>
+	{#<a href="{{ path('rating_new', {'id': serie.id}) }}">Create new</a>#}
 {% endblock %}
+

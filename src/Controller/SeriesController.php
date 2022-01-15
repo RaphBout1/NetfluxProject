@@ -35,6 +35,13 @@ class SeriesController extends AbstractController
     {
         return $this->render('series/accueil.html.twig');
     }
+    /**
+     * @Route("/user", name="userInterface", methods={"GET"})
+     */
+    public function user(EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('series/userInterface.html.twig');
+    }
 
     /**
      * @Route("/Apropos", name="page_A_propos", methods={"GET"})
