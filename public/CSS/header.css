@@ -40,3 +40,14 @@ body {
   flex-direction: row;
   justify-content: space-around;
 }
+#connexion{
+  display: flex;
+  flex-direction: row;
+align-items: center;
+
+}
+#connexion img{
+  height: 4.5vh;
+  margin-left: 1vw;
+}
+

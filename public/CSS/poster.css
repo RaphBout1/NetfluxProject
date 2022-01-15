@@ -111,3 +111,32 @@ form{
   .navigation a:hover {
 text-decoration: underline;
   }
+
+  #user{
+    color: rgb(235, 230, 224);
+  }
+  #deconnexion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left:3vw ;
+    padding-right: 8vw;
+    align-items: center;
+  }
+
+  .btn{
+
+    background:rgb(235, 230, 224);
+    color:black;
+    transition: 0.2s;
+    font-weight: 600;
+    border: unset;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.btn:hover{
+    background-color:rgb(221, 0, 0) ;
+    color: rgb(235, 230, 224);
+}
+.btn:active{border-radius: 5px;}

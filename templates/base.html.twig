@@ -40,7 +40,8 @@
 				{% block connexion %}
 					<div id="connexion">
 						{% if app.user %}
-							<a href="{{ path('app_logout') }}">Se déconnecter</a>
+							<a href="{{ path('userInterface') }}">Mon compte</a>
+							<img src="iconUser.jpg">
 						{% else %}
 							<a href="{{ path('app_login') }}">Se connecter</a>
 						{% endif %}
