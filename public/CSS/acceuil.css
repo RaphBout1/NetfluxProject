@@ -19,6 +19,9 @@
     animation-name: apparition;
     transition: all 0.3s;
 }
+#cache{
+    display: none;
+}
 
 a:hover span {
     display: none

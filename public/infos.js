@@ -7,3 +7,8 @@ idiv.style.display = "none";
 idiv.style.display = "block";
 }
 }
+function afficherDef(id) {
+    var idiv = document.getElementById(id)
+    idiv.style.display = "block";
+    }
+    

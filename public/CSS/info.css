@@ -1,26 +1,44 @@
 :root {
-  --taille: 65vw
+  --taille: 60vw
 }
 
 #InfosSerie {
-  display: flex;
-  flex-direction: column-reverse;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows:6vh auto auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
   color: rgb(235, 230, 224);
+  font-size: 1.3em;
+
 }
 
 #plotTrailer {
-
+  grid-area: 2 / 1 / 3 / 2;
   display: flex;
   flex-direction: row;
   vertical-align: middle;
   justify-content: space-around;
 }
 
-#saisonRating{
+#saisonRating {
+  grid-area: 3 / 1 / 4 / 2;
   display: flex;
   flex-direction: row;
   vertical-align: middle;
-  justify-content: space-around;
+  padding: 2vw;
+  justify-content: space-between;
+}
+
+#titreSuivre {
+  grid-area: 1 / 1 / 2 / 2;
+  height: 4vh;
+
+  margin-left: 1.5vw;
+  margin-right: 1.5vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #trailer {
@@ -37,11 +55,13 @@
   height: calc(var(--taille) * 0.5628205128205128);
 
 }
-#saisons{
-  width: 60vw;
+
+#saisons {
+  width: 48vw;
 }
+
 #rating {
-  width: 40vw;
+  width: 42vw;
 }
 
 #infos {
@@ -50,17 +70,15 @@
   display: flex;
   flex-direction: column;
 
-  
+
 }
 
-h2{
-  font-size: 2.6vh;
+h2 {
+  font-size: 2em;
 }
-h3{
-  font-size: 2.2vh;
-}
-#infos p{
-font-size: 2vh;
+
+#infos p {
+  margin-top: 1vh;
 }
 
 .episodes {
@@ -73,24 +91,22 @@ font-size: 2vh;
   margin-top: 2px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 }
 
-.episodes p {
-  font-size: 1.2vh;
+.noteVu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.episodes b {
-  font-size: 1.4vh;
-}
 
 a {
   text-decoration: none;
   color: rgb(235, 230, 224);
 }
-#saisons a{
-  font-size:1.2vh ;
-}
+
 a:hover {
   color: rgb(221, 0, 0);
 }
@@ -105,4 +121,95 @@ h3 {
 
 h3:hover {
   color: rgb(221, 0, 0);
+}
+
+.btn {
+  height: 5vh;
+  width: 9vw;
+  background: rgb(235, 230, 224);
+  color: black;
+  transition: 0.2s;
+  font-weight: 600;
+  border: unset;
+}
+
+.btn:hover {
+  background-color: rgb(221, 0, 0);
+  color: rgb(235, 230, 224);
+}
+
+.btn:active {
+  border-radius: 5px;
+}
+
+.suivreEp input {
+  height: 4vh;
+  width: 2vw;
+  background-color: transparent;
+  border: none;
+  border-radius: 20px;
+  color: rgb(235, 230, 224);
+  font-weight: bolder;
+  text-align: center;
+  align-items: center;
+}
+
+.suivreEp input:hover {
+  color: rgb(221, 0, 0);
+  border: solid 1px rgb(221, 0, 0);
+}
+
+.EpisodeSuivis {
+  text-decoration: line-through;
+}
+
+#newComment{
+margin-bottom: 4vh;
+}
+
+#rating_value {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+#rating_value label {
+  margin-right: 10px;
+
+}
+
+#rating_comment {
+  height: 10vh;
+  width: 100%;
+  background-color: rgba(235, 230, 224, 0.164);
+  color: rgb(235, 230, 224);
+  padding: 5px;
+}
+
+#rating_comment:hover {
+  border: solid 1px rgb(221, 0, 0);
+}
+
+#rating_comment:active {
+
+  border-radius: 5px;
+}
+table {
+  text-align: center;
+  width: 100%;
+}
+tr{
+  margin-top: 1vh;
+  padding: 5px;
+}
+tr:hover{
+  background-color:rgba(235, 230, 224, 0.164);
+}
+td{
+  max-width:  12vw;
+ 
+}
+#commentaire{
+  overflow-wrap: break-word;
 }

@@ -8,8 +8,44 @@
 #menuShearch{
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
+  height: 6vh;
+  padding-left: 2vh;
+  padding-right: 10vh;
 }
+
+form{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.submitBouton{
+  height: 4vh;
+  width: 3vw;
+  border: unset;
+  background-color: transparent;
+  transition: all 2s;
+  
+}
+.submitBouton:hover{
+  border: solid 1px rgba(235, 230, 224, 0.226) ;
+  
+}
+
+.submitBouton img{
+  height: 100%;
+}
+
+#shearch{
+  width: 18vw;
+  border-radius: 1px;
+  display: none;
+  border: unset;
+}
+
 
 #tablePoster {
   display: flex;

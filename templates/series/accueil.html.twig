@@ -10,6 +10,8 @@
 
 {% block header %}{% endblock %}
 {% block body %}
+
+
 	<div id="acceuil">
 		<div id="titre">
 			<h1>N</h1>
@@ -20,7 +22,18 @@
 			<h1>U</h1>
 			<h1>X</h1>
 		</div>
-		<a href="{{ path('series_poster') }}"><span>C'est parti {% if app.user %} {{ app.user.name }} {% endif %} !</span></a>
+		<a href="{{ path('series_poster') }}">
+			<span>C'est parti
+				{% if app.user %}
+					{{ app.user.name }}
+				{% endif %}
+				!</span>
+		</a>
+		<div id="cache">
+			<audio controls autoplay>
+				<source src="Jgrenier.mp3" type="audio/mp3">
+			</audio>
+		</div>
 	</div>
 
 

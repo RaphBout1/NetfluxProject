@@ -8,16 +8,19 @@
 {% block title %}Series
 
 {% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('infos.js') }}"></script>
+{% endblock %}
 
 
 {% block body %}
 	<div id="poster">
 		<div id="menuShearch">
 			<h1>Series</h1>
-			<div id="search">
+			<div id="search" >
 				<form action : path'series_poster' method="get">
-					<input type="text" name="terme">
-					<input type="submit" value="Rechercher">
+					<input type="text" id="shearch" name="terme">
+					<button type="submit" class="submitBouton" value="" onmouseover="afficherDef('shearch')"><img src="loupe.png"></img></button>
 				</form>
 			</div>
 		</div>
