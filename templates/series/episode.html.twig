@@ -1,15 +1,27 @@
 {% for episode in episodes %}
 	<div class='textNote'>
+{% if app.user %}
 		<p {% if app.user.EpisodeSuivis(app.user, episode) %} class="EpisodeSuivis" {% else %} class="EpisodePasSuivis" {% endif %}>
 			<b>E.{{ episode.number}}</b>:
 			{{ episode.title}}
 		</p>
-		{% if app.user %}
-			<form action='{{ path('suivre_episode', {'idEp': episode.id}) }}' method='post' class='suivreEp'>
-				<input type='submit' value='{% if app.user.EpisodeSuivis(app.user, episode) %} ✔ {% else %} ➕ {% endif %}'>
-			</form>
+		{% else %}
+		<p  class="EpisodePasSuivis" >
+			<b>E.{{ episode.number}}</b>:
+			{{ episode.title}}
+		</p>
 		{% endif %}
-		<a href='https://www.imdb.com/title/{{ episode.getImdb}}'>{{ episode.getImdbrating}}⭐</a>
+		<div class='noteVu'>
+			<a href='https://www.imdb.com/title/{{ episode.getImdb}}'>
+				{{ episode.getImdbrating}}⭐</a>
+
+			{% if app.user %}
+				<form action='{{ path('suivre_episode', {'idEp': episode.id}) }}' method='post' class='suivreEp'>
+					<input type='submit' value='{% if app.user.EpisodeSuivis(app.user, episode) %} Vu {% else %} + {% endif %}'>
+				</form>
+			{% endif %}
+		</div>
+
 	</div>
 {% endfor %}
 
