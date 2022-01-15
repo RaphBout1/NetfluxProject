@@ -14,7 +14,9 @@
 	<div id="serieInfo">
 
 		<div id="infos">
-				<h2><a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a></h2>
+			<h2>
+				<a href="https://www.imdb.com/title/{{ series.imdb }}">{{ series.title }}</a>
+			</h2>
 			<p>
 				<i>{{ series.plot }}</p>
 
@@ -43,16 +45,25 @@
 
 					{% for season in seasons %}
 						<div class="saison">
-							<p>
-								<h3 class="titreSaison" onclick="afficher('{{season.id}}')">Saison:
-									{{season.number}}
-									ⓥ</h3>
-							</p>
-							{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
+
+							<h3 class="{{ path('series_show', {'id': series.id}) }}" onclick="afficher('{{season.id}}')">Saison:
+								{{season.number}}
+								ⓥ</h3>
+							<div class='episodes' id="{{season.id}}">
+							{{ render(controller('App\\Controller\\SeriesController::episodes', {'id': season.id})) }}
+							</div>
 						</div>
 					{% endfor %}
 				</div>
 			</p>
+		</div>
+		<div id="boutonSuivre">
+
+			{% if app.user %}
+				<form action="{{ path('suivre_serie', {'id': series.id}) }}" method="post" class="suivre">
+					<input type="submit" value="{% if app.user.SerieSuivis(app.user, series) %}Ne plus suivre{% else %}Suivre{% endif %}">
+				</form>
+			{% endif %}
 		</div>
 
 		<div id="trailer">
