@@ -79,8 +79,8 @@ class SeriesController extends AbstractController
        $serie->setTitle($response['Title']);
        $stringYear = $response['Year'];
        $stringYear = explode("-", $stringYear);
-      var_dump((int)$stringYear[0]);
 
+       $serie->setYearStart((int)$stringYear[0]);
        $serie->setYearStart((int)$stringYear[0]);
        $serie->setPlot($response['Plot']);
        $serie->setImdb($response['imdbID']);

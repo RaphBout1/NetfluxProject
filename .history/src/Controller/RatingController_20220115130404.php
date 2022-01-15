@@ -63,7 +63,7 @@ class RatingController extends AbstractController
             'series' => $series,
             'form' => $form->createView(),
             'serieValide' => $valueBool,
-            'idnonvalide' =>$pasvalide,
+            'idnonvalide' =>$pasvalide
         ]);
     }
 

@@ -44,15 +44,11 @@
 					<input type="submit" value="Rechercher">
 				</form>
     </div>
-    {% if idnonvalide %}
-        <p> l'ID rentré n'est pas un ID valide </p>
-
-    {% endif %}
     {% if serieValide %}
         <h1>{{addSerie.Title}}</h1>
 
-        <p> description : {{addSerie.Plot}}</p>
-        <p>Années : {{addSerie.Year}}</p>
+        <p>{{addSerie.Plot}}</p>
+        <p>Année{{addSerie.Year}}</p>
          <p>le Poster</p>
         <img class="imgInfo" src={{addSerie.Poster}} />
         <br>

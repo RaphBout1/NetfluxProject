@@ -82,6 +82,7 @@ class SeriesController extends AbstractController
       var_dump((int)$stringYear[0]);
 
        $serie->setYearStart((int)$stringYear[0]);
+       $serie->setYearEnd((int)$stringYear[1]);
        $serie->setPlot($response['Plot']);
        $serie->setImdb($response['imdbID']);
        $serie->setPoster($response['Poster']);
