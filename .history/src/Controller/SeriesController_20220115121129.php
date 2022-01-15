@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Episode;
-use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
 use App\Form\SeriesType;
@@ -26,7 +25,7 @@ use DateTime;
  */
 class SeriesController extends AbstractController
 {
-
+    
     /**
      * @Route("/", name="page_accueil", methods={"GET"})
      */
@@ -49,9 +48,10 @@ class SeriesController extends AbstractController
     public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
     {
         $repository = $entityManager->getRepository(Series::class);
-        if (isset($_GET['terme'])) {
-            $search = $_GET['terme'] . "%";
-        } else {
+        if(isset($_GET['terme'])){
+            $search = $_GET['terme']."%";
+        }
+        else{
             $search = '%';
         }
         $series = $paginator->paginate(
@@ -59,11 +59,13 @@ class SeriesController extends AbstractController
             $request->query->getInt('page', 1), /*page number*/
             12 /*limit per page*/
         );
-
+       
 
         return $this->render('series/show.html.twig', [
             'series' => $series,
         ]);
+
+        
     }
 
     /**
@@ -78,8 +80,7 @@ class SeriesController extends AbstractController
         $serie = new Series();
        $serie->setTitle($response['Title']);
        $stringYear = $response['Year'];
-       $stringYear = explode("-", $stringYear);
-      var_dump((int)$stringYear[0]);
+       $stringYear = explode(" ", $stringYear);
 
        $serie->setYearStart((int)$stringYear[0]);
        $serie->setPlot($response['Plot']);
@@ -100,7 +101,7 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/series/{id}", name="series_show", methods={"GET","POST"})
+     * @Route("/series/{id}", name="series_show", methods={"GET", "POST"})
      */
     public function show(Series $series,Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -126,21 +127,22 @@ class SeriesController extends AbstractController
         
         $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
-        $season = $repository->findBy(['series' => $series->getId()], ['number' => 'ASC']);
+        $season = $repository->findBy(['series'=>$series->getId()],['number'=>'ASC']);
 
-        $urlYoutube = $series->getYoutubeTrailer();
-        $arrayChaine = explode("/watch?v=", $urlYoutube);
-        $id_video = $arrayChaine[1];
+        $urlYoutube =$series->getYoutubeTrailer();
+        $arrayChaine=explode("/watch?v=",$urlYoutube);
+        $id_video=$arrayChaine[1];
+        
+        
 
         return $this->render('series/infos.html.twig', [
-            'idvideo' => $id_video,
+            'idvideo'=>$id_video,
             'series' => $series,
             'seasons' => $season,
             'rating' => $rating,
             'form' => $form->createView(),
             'ratings' => $ratings,
         ]);
-
 
     }
 
@@ -170,69 +172,38 @@ class SeriesController extends AbstractController
      */
     public function delete(Request $request, Series $series, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $series->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$series->getId(), $request->request->get('_token'))) {
             $entityManager->remove($series);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
-    /**
+     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
      */
     public function poster(Series $series): Response
     {
-        return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg',));
-    }
-
-    /**
-     * @Route("/suivre/{id}", name="suivre_serie", methods={"POST"})
-     */
-    public function suivre(Series $series, EntityManagerInterface $entityManager): Response
-    {
-
-        /** @var User $user */
-        $user = $this->getUser();
-        if ($user->SerieSuivis($user, $series)) {
-            $user->removeSeries($series);
-        } else {
-            $user->addSeries($series);
-        }
-
-        $entityManager->flush();
-        return $this->redirectToRoute('series_show', ['id' => $series->getId()], Response::HTTP_SEE_OTHER);
-    }
-    /**
-     * @Route("/suivreEp/{idEp}", name="suivre_episode", methods={"POST"})
-     */
-    public function suivreEp(Episode $idEp, EntityManagerInterface $entityManager): Response
-    {
-
-        /** @var User $user */
-        $user = $this->getUser();
-        if ($user->EpisodeSuivis($user, $idEp)) {
-            $user->removeEpisode($idEp);
-        } else {
-            $user->addEpisode($idEp);
-        }
-
-        $entityManager->flush();
-        return $this->redirectToRoute('series_show', ['id' => $idEp->getSeason()->getSeries()->getId()], Response::HTTP_SEE_OTHER);
+        return new Response(stream_get_contents($series->getPoster()), 200, array('content-type' => 'image/jpeg', ));
     }
     /**
      * @Route("/episode/{id}", name="episode_show", methods={"GET"})
      */
-    public function episodes(Season $id, EntityManagerInterface $entityManager): Response
+    public function episodes(Season $seasons): Response
     {
-        $repository = $entityManager->getRepository(Episode::class);
-        //$episodes = $repository->findBySeason($id);
-        $episodes = $repository->findBy(['season' => $id->getId()], ['number' => 'ASC']);
-     
-        return $this->render('series/episode.html.twig', [
-            'episodes' => $episodes,
-            'season' => $id,
-        ]);
+        $em = $this -> getDoctrine()->getManager();
+        $repository = $em->getRepository(Episode::class);
+        $episodes = $repository->findBy(['season'=>$seasons->getId()],['number'=>'ASC']);
+        $data="<div class='episodes' id=".$seasons->getId().">";
+        foreach($episodes as $episode){
+           $data.= "<div class='textNote'><p><b>E. ".$episode->getNumber()."</b> :".$episode->getTitle()."</p>   <a href='https://www.imdb.com/title/".$episode->getImdb()."'>".$episode->getImdbrating()."⭐</a></div>";
+        }
+        $data.="</div>";
 
+
+        return new Response(
+            $data
+        );
 
     }
 
