@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rating index{% endblock %}
+
+{% block body %}
+    <h1>Rating index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>serie</th>
+                <th>Value</th>
+                <th>Comment</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rating in ratings %}
+            <tr>
+                <td>{{ rating.getSeries().title }}</td>
+                <td>{{ rating.value }}</td>
+                <td>{{ rating.comment }}</td>
+                <td>{{ rating.date ? rating.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <form method="post" action="{{ path('rating_delete', {'id': rating.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ rating.id) }}">
+                    <button class="btn">Delete</button>
+</form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h1> vous voulez ajouter une serie ?</h1>
+
+    <div id="search">
+				<form action : path'series_poster' method="get">
+					<input type="text" name="imdbID">
+					<input type="submit" value="Rechercher">
+				</form>
+    </div>
+    {}
+    <h1>{{addSerie.Title}}</h1>
+
+    <p>{{addSerie.Plot}}</p>
+     <p>{{addSerie.Year}}</p>
+     <img class="imgInfo" src={{addSerie.Poster}} />
+     <br>
+     <a>{{addSerie.imdbID}}</a>
+     <br>
+     <a>{{addSerie.Director}}</a>
+     <br>
+     <a>{{addSerie.Awards}}</a>
+     <br>
+     <p>{{addSerie.Actors}}</p>
+      <br>
+     <p>{{addSerie.Country}}</p>
+
+    
+      <h1>Create new Series</h1>
+
+   
+    <form method="post" action="{{ path('serie_add', {'imdbID':addSerie.imdbID}) }}" onsubmit="return confirm('Are you sure you want to add this serie ?');">
+                    <input type="hidden" name="_token">
+                    <button class="btn">add this serie</button>
+
+
+
+
+    {#<a href="{{ path('rating_new', {'id': serie.id}) }}">Create new</a>#}
+{% endblock %}

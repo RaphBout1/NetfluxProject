@@ -12,6 +12,8 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use App\Service\CallApiService;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
@@ -65,25 +67,35 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/series/new", name="series_new", methods={"GET", "POST"})
+     * @Route("/series/add/{imdbID}", name="serie_add", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CallApiService $callApiService, String $imdbID): Response
     {
-        $series = new Series();
-        $form = $this->createForm(SeriesType::class, $series);
-        $form->handleRequest($request);
+        dump($callApiService->getApi($imdbID));
+        $response = $callApiService->getApi($imdbID);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($series);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('series_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $serie = new Series();
+       $serie->setTitle($response['Title']);
+       $stringYear = $response['Year'];
+       $stringYear = explode(" ", $stringYear);
 
-        return $this->renderForm('series/new.html.twig', [
-            'series' => $series,
-            'form' => $form,
-        ]);
+       $serie->setYearStart((int)$stringYear[0]);
+       $serie->setPlot($response['Plot']);
+       $serie->setImdb($response['imdbID']);
+       $serie->setPoster($response['Poster']);
+       $serie->setDirector($response['Director']);
+       $serie->setAwards($response['Awards']);
+       #$serie->addActor($response['Actors']);
+       #$serie->addCountry($response['Country']);
+       #$serie->addGenre($response['Genre']);
+       $entityManager->persist($serie);
+        $entityManager->flush();
+
+
+        
+        
+        return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -222,4 +234,6 @@ class SeriesController extends AbstractController
 
 
     }
+
+    
 }
