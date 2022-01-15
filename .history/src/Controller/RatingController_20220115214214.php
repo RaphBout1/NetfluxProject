@@ -81,6 +81,10 @@ class RatingController extends AbstractController
             
             $entityManager->flush();
             
+
+
+
+
             return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
        

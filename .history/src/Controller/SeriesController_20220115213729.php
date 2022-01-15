@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,19 +98,26 @@ class SeriesController extends AbstractController
 
 
         $serie = new Series();
-        $serie->setTitle($response['Title']);
-        $stringYear = $response['Year'];
-        $stringYear = explode("-", $stringYear);
+       $serie->setTitle($response['Title']);
+       $stringYear = $response['Year'];
+       $stringYear = explode("-", $stringYear);
+      var_dump((int)$stringYear[0]);
 
-        $serie->setYearStart((int)$stringYear[0]);
-        $serie->setPlot($response['Plot']);
-        $serie->setImdb($response['imdbID']);
-        $serie->setPoster($response['Poster']);
-        $serie->setDirector($response['Director']);
-        $serie->setAwards($response['Awards']);
-        $entityManager->persist($serie);
+       $serie->setYearStart((int)$stringYear[0]);
+       $serie->setPlot($response['Plot']);
+       $serie->setImdb($response['imdbID']);
+       $serie->setPoster($response['Poster']);
+       $serie->setDirector($response['Director']);
+       $serie->setAwards($response['Awards']);
+       #$serie->addActor($response['Actors']);
+       #$serie->addCountry($response['Country']);
+       #$serie->addGenre($response['Genre']);
+       $entityManager->persist($serie);
         $entityManager->flush();
 
+
+        
+        
         return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -155,6 +163,40 @@ class SeriesController extends AbstractController
         ]);
 
 
+    }
+
+
+    /**
+     * @Route("/series/{id}/edit", name="series_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Series $series, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SeriesType::class, $series);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute( 'rating_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('series/edit.html.twig', [
+            'series' => $series,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/series/delete/{id}", name="series_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Series $series, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $series->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($series);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})

@@ -6,13 +6,17 @@ use App\Entity\Episode;
 use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use App\Service\CallApiService;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use App\Entity\Rating;
 use App\Form\RatingType;
 use DateTime;
@@ -52,15 +56,19 @@ class SeriesController extends AbstractController
 
 
         // Pagination
+        
+        $pagination = $paginator->paginate($series, $request->query->getInt('page', 1), 12);
+
+
+
+   
+
         $series = $paginator->paginate(
-            $series, // Requête contenant les données à paginer (ici nos articles)
-            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-            12// Nombre de résultats par page
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
         );
-
-
         return $this->render('series/userInterface.html.twig',[
-            'series' => $series,
+            'series' => $pagination,
         ]);
     }
 
@@ -97,19 +105,26 @@ class SeriesController extends AbstractController
 
 
         $serie = new Series();
-        $serie->setTitle($response['Title']);
-        $stringYear = $response['Year'];
-        $stringYear = explode("-", $stringYear);
+       $serie->setTitle($response['Title']);
+       $stringYear = $response['Year'];
+       $stringYear = explode("-", $stringYear);
+      var_dump((int)$stringYear[0]);
 
-        $serie->setYearStart((int)$stringYear[0]);
-        $serie->setPlot($response['Plot']);
-        $serie->setImdb($response['imdbID']);
-        $serie->setPoster($response['Poster']);
-        $serie->setDirector($response['Director']);
-        $serie->setAwards($response['Awards']);
-        $entityManager->persist($serie);
+       $serie->setYearStart((int)$stringYear[0]);
+       $serie->setPlot($response['Plot']);
+       $serie->setImdb($response['imdbID']);
+       $serie->setPoster($response['Poster']);
+       $serie->setDirector($response['Director']);
+       $serie->setAwards($response['Awards']);
+       #$serie->addActor($response['Actors']);
+       #$serie->addCountry($response['Country']);
+       #$serie->addGenre($response['Genre']);
+       $entityManager->persist($serie);
         $entityManager->flush();
 
+
+        
+        
         return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
 
@@ -129,6 +144,7 @@ class SeriesController extends AbstractController
             $entityManager->persist($rating);
             
             $entityManager->flush();
+            return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
         $ratings = $entityManager
             ->getRepository(Rating::class)
@@ -155,6 +171,40 @@ class SeriesController extends AbstractController
         ]);
 
 
+    }
+
+
+    /**
+     * @Route("/series/{id}/edit", name="series_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Series $series, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SeriesType::class, $series);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute( 'rating_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('series/edit.html.twig', [
+            'series' => $series,
+            'form' => $form,
+        ]);
+    }
+
+    /**
+     * @Route("/series/delete/{id}", name="series_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Series $series, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $series->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($series);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})

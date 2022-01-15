@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -156,6 +157,7 @@ class SeriesController extends AbstractController
 
 
     }
+
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
      */

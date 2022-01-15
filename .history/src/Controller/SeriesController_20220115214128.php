@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

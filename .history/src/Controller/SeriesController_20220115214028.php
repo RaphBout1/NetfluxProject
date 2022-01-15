@@ -6,6 +6,7 @@ use App\Entity\Episode;
 use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Form\SeriesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -155,6 +156,21 @@ class SeriesController extends AbstractController
         ]);
 
 
+    }
+
+
+    
+    /**
+     * @Route("/series/delete/{id}", name="series_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Series $series, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $series->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($series);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})

@@ -11,7 +11,6 @@
 {% block body %}
 	
 		<div id="user">
-		{% if app.user %}
 			<div id="mesSerie">
 				<div id="deconnexion">
 					<h2>Mes Series :</h2>
@@ -33,11 +32,10 @@
 		{% else %}
 			<a href="{{ path('app_login') }}">Se connecter</a>
 		{% endif %}
-		{# display navigation #}
+	</div>
+	{# display navigation #}
 		<div class="navigation">
 			{{ knp_pagination_render(series) }}
 		</div>
-	</div>
-	
 {% endblock %}
 
