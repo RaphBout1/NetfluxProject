@@ -107,10 +107,31 @@
 						<b>YearEnd :</b>
 						{{ series.yearEnd }}</p>
 				{% endif %}
-			</div>
+				<div id="saisons">
+					<h2>Les Saisons :</h2>
 
+					{% for season in seasons %}
+						<div class="saison">
 
+							<h3 class="{{ path('series_show', {'id': series.id}) }}" onclick="afficher('{{season.id}}')">Saison:
+								{{season.number}}
+								ⓥ</h3>
+							<div class='episodes' id="{{season.id}}">
+							{{ render(controller('App\\Controller\\SeriesController::episodes', {'id': season.id})) }}
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</p>
+		</div>
+		<div id="boutonSuivre">
 
+			{% if app.user %}
+				<form action="{{ path('suivre_serie', {'id': series.id}) }}" method="post" class="suivre">
+					<input type="submit" value="{% if app.user.SerieSuivis(app.user, series) %}Ne plus suivre{% else %}Suivre{% endif %}">
+				</form>
+			{% endif %}
+		</div>
 
 			<div id="trailer">
 				<iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube.com/embed/{{idvideo}}?autoplay=1&mute=1&loop=1&playlist={{idvideo}}&modestbranding=1&rel=0" frameborder="0"/>

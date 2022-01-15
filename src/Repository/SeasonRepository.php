@@ -39,18 +39,20 @@ class SeasonRepository extends ServiceEntityRepository
     
   
 
-
-
-    /*
-    public function findOneBySomeField($value): ?Season
+ // /**
+    //  * @return Query
+    //  */
+    
+    public function findBySeason($value) 
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
+            ->from('Episode', 'e')
+            ->Where('e.season_id LIKE :val.id')
             ->setParameter('val', $value)
+            ->orderBy('e.number', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            
         ;
     }
-    */
 
 }

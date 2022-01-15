@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
 /**
  * User
  *
@@ -257,9 +258,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    public function getUserIdentifier(): string { return $this->getEmail(); }
-    public function getRoles(): array { return ['ROLE_USER']; }
-    public function eraseCredentials() { }
+    public function getUserIdentifier(): string
+    {
+        return $this->getId();
+    }
+    public function getRoles(): array
+    {
+        return ['ROLE_USER'];
+    }
+    public function eraseCredentials()
+    {
+    }
     public function getSalt()
     {
         return null;
@@ -268,10 +277,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->name;
     }
+    public function SerieSuivis(User $user, Series $serie): bool
+    {
+        $suivis = $user->getSeries();
 
-    public function __toString()
-{
-  return $this->email;
-}
+        foreach ($suivis as $suivi) {
+            if ($suivi->getId() === $serie->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function EpisodeSuivis(User $user, Episode $episode): bool
+    {
+        $suivis = $user->getEpisode();
 
+        foreach ($suivis as $suivi) {
+            if ($suivi->getId() === $episode->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }
