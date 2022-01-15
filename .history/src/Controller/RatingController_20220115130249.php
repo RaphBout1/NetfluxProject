@@ -21,7 +21,7 @@ class RatingController extends AbstractController
     #[Route('/', name: 'rating_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager, CallApiService $callApiService, Request $request): Response
     {
-        $pasvalide = false;
+        $isvalide = false;
         if(isset($_GET['imdbID'])){
 
             dump($_GET['imdbID']);
@@ -30,7 +30,7 @@ class RatingController extends AbstractController
             $bool =$response['Response'];
             if($bool == 'False'){
                 $valueBool = false;
-                $pasvalide = true;
+                $isvalide = true
             }else{
                 $valueBool = true;
             }
@@ -63,7 +63,7 @@ class RatingController extends AbstractController
             'series' => $series,
             'form' => $form->createView(),
             'serieValide' => $valueBool,
-            'idnonvalide' =>$pasvalide,
+            'idnonvalide' =>
         ]);
     }
 

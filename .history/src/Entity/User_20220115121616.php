@@ -301,7 +301,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     public function __toString()
     {
-        return $this->getName();
+        return $this->getName()
     }
     
 }
