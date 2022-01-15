@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
+use App\Entity\Rating;
+use App\Form\RatingType;
+use DateTime;
 
 /**
  * @Route("/")
@@ -86,9 +89,29 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series/{id}", name="series_show", methods={"GET","POST"})
      */
-    public function show(Series $series): Response
+    public function show(Series $series,Request $request, EntityManagerInterface $entityManager): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
+        $form->handleRequest($request);
+        dump($form);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rating->setUser($this->getUser());
+            $rating->setDate(new DateTime());
+            $rating->setSeries($series);
+            $entityManager->persist($rating);
+            
+            $entityManager->flush();
+            return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
+        }
+        $ratings = $entityManager
+            ->getRepository(Rating::class)
+            ->findBy(
+                ['series' => $series],
+            );
+
+        
+        $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series' => $series->getId()], ['number' => 'ASC']);
 
@@ -100,6 +123,9 @@ class SeriesController extends AbstractController
             'idvideo' => $id_video,
             'series' => $series,
             'seasons' => $season,
+            'rating' => $rating,
+            'form' => $form->createView(),
+            'ratings' => $ratings,
         ]);
 
 
@@ -117,7 +143,7 @@ class SeriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('series_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute( 'rating_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('series/edit.html.twig', [
@@ -127,7 +153,7 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/series/{id}", name="series_delete", methods={"POST"})
+     * @Route("/series/delete/{id}", name="series_delete", methods={"POST"})
      */
     public function delete(Request $request, Series $series, EntityManagerInterface $entityManager): Response
     {
@@ -136,7 +162,7 @@ class SeriesController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('series_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
      * @Route("/poster/{id}", name="controleur_poster_series_show", methods={"GET"})
