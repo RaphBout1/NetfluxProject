@@ -115,6 +115,13 @@ class Series
     private $user;
 
     /**
+     * @var float
+     *
+     */
+    private $noteUser;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -237,6 +244,16 @@ class Series
 
         return $this;
     }
+     /**
+     * @return float
+     */
+    public function getnoteUser(){
+        return $this->noteUser;
+    }
+    public function setnoteUser(float $value){
+        $this->noteUser = $value;
+    }
+
 
     /**
      * @return Collection|Actor[]
@@ -350,6 +367,7 @@ class Series
 {
   return $this->title;
 }
+
 
     
 

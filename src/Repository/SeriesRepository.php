@@ -50,5 +50,20 @@ class SeriesRepository extends ServiceEntityRepository
             
         ;
     }
+
+    public function findNotesCroissantes() 
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Series s
+            WHERE s.noteUser > 0
+            ORDER BY s.notesUser DESC');
+
+        // returns an array of Product objects
+        return $query;
+    }
+
     
 }

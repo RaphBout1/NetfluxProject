@@ -12,6 +12,7 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\calculMoyenne;
 
 use App\Service\CallApiService;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,8 +54,11 @@ class SeriesController extends AbstractController
     /**
      * @Route("/series", name="series_poster", methods={"GET"})
      */
-    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request): Response
+    public function series(EntityManagerInterface $entityManager, PaginatorInterface $paginator, Request $request, calculMoyenne $calculMoyenne): Response
     {
+        $calculMoyenne->setMoyenne($entityManager);
+
+
         $repository = $entityManager->getRepository(Series::class);
         if (isset($_GET['terme'])) {
             $search = $_GET['terme'] . "%";
@@ -83,34 +87,36 @@ class SeriesController extends AbstractController
 
 
         $serie = new Series();
-       $serie->setTitle($response['Title']);
-       $stringYear = $response['Year'];
-       $stringYear = explode("-", $stringYear);
-      var_dump((int)$stringYear[0]);
+        $serie->setTitle($response['Title']);
+        $stringYear = $response['Year'];
+        $stringYear = explode("-", $stringYear);
+        var_dump((int)$stringYear[0]);
 
-       $serie->setYearStart((int)$stringYear[0]);
-       $serie->setPlot($response['Plot']);
-       $serie->setImdb($response['imdbID']);
-       $serie->setPoster($response['Poster']);
-       $serie->setDirector($response['Director']);
-       $serie->setAwards($response['Awards']);
-       #$serie->addActor($response['Actors']);
-       #$serie->addCountry($response['Country']);
-       #$serie->addGenre($response['Genre']);
-       $entityManager->persist($serie);
+        $serie->setYearStart((int)$stringYear[0]);
+        $serie->setPlot($response['Plot']);
+        $serie->setImdb($response['imdbID']);
+        $serie->setPoster($response['Poster']);
+        $serie->setDirector($response['Director']);
+        $serie->setAwards($response['Awards']);
+        #$serie->addActor($response['Actors']);
+        #$serie->addCountry($response['Country']);
+        #$serie->addGenre($response['Genre']);
+        $entityManager->persist($serie);
         $entityManager->flush();
 
 
-        
-        
+
+
         return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
      * @Route("/series/{id}", name="series_show", methods={"GET","POST"})
      */
-    public function show(Series $series,Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Series $series, Request $request, EntityManagerInterface $entityManager, calculMoyenne $calculMoyenne): Response
     {
+        $calculMoyenne->setMoyenne($entityManager);
+
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
@@ -120,7 +126,7 @@ class SeriesController extends AbstractController
             $rating->setDate(new DateTime());
             $rating->setSeries($series);
             $entityManager->persist($rating);
-            
+
             $entityManager->flush();
             return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -129,9 +135,12 @@ class SeriesController extends AbstractController
             ->findBy(
                 ['series' => $series],
             );
+        $moyenne = $series->getnoteUser();
+        echo ($moyenne);
 
-        
-        $em = $this -> getDoctrine()->getManager();
+
+
+        $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Season::class);
         $season = $repository->findBy(['series' => $series->getId()], ['number' => 'ASC']);
 
@@ -146,9 +155,8 @@ class SeriesController extends AbstractController
             'rating' => $rating,
             'form' => $form->createView(),
             'ratings' => $ratings,
+            'moyenne' => $moyenne,
         ]);
-
-
     }
 
 
@@ -163,7 +171,7 @@ class SeriesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute( 'rating_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('rating_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('series/edit.html.twig', [
@@ -234,14 +242,10 @@ class SeriesController extends AbstractController
         $repository = $entityManager->getRepository(Episode::class);
         //$episodes = $repository->findBySeason($id);
         $episodes = $repository->findBy(['season' => $id->getId()], ['number' => 'ASC']);
-     
+
         return $this->render('series/episode.html.twig', [
             'episodes' => $episodes,
             'season' => $id,
         ]);
-
-
     }
-
-    
 }
