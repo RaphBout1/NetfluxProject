@@ -24,14 +24,13 @@
 								{{season.number}}
 								ⓥ</h3>
 						</p>
-						{{ render(controller('App\\Controller\\SeriesController::episodes', {'seasons': season})) }}
+						{{ render(controller('App\\Controller\\SeriesController::episodes', {'id': season})) }}
 					</div>
 				{% endfor %}
 			</div>
 			<div id="rating">
 				{% if app.user %}
 
-					<a href="{{ path('rating_new' , {'id': series.id}) }}">Donner votre avis</a>
 					{% if app.user %}
     				<h1>Create new Rating</h1>
 
@@ -86,7 +85,6 @@
 				</h2>
 				<p>
 					<i>{{ series.plot }}</p>
-				</p>
 				{% if series.director is not null%}
 					<p>
 						<b>Directeur :</b>
@@ -107,22 +105,8 @@
 						<b>YearEnd :</b>
 						{{ series.yearEnd }}</p>
 				{% endif %}
-				<div id="saisons">
-					<h2>Les Saisons :</h2>
-
-					{% for season in seasons %}
-						<div class="saison">
-
-							<h3 class="{{ path('series_show', {'id': series.id}) }}" onclick="afficher('{{season.id}}')">Saison:
-								{{season.number}}
-								ⓥ</h3>
-							<div class='episodes' id="{{season.id}}">
-							{{ render(controller('App\\Controller\\SeriesController::episodes', {'id': season.id})) }}
-							</div>
-						</div>
-					{% endfor %}
-				</div>
-			</p>
+		
+			
 		</div>
 		<div id="boutonSuivre">
 
