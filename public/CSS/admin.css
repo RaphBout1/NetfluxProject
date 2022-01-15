@@ -1,0 +1,50 @@
+#admin{
+    color: rgb(235, 230, 224);
+    padding: 1vw;
+}
+
+table {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 4vh;
+  }
+  tr{
+    margin-top: 1vh;
+    padding: 5px;
+  }
+  tr:hover{
+    background-color:rgba(235, 230, 224, 0.164);
+  }
+  td{
+    max-width:  12vw;
+   
+  }
+  #commentaire{
+    overflow-wrap: break-word;
+  }
+
+  .btn {
+    height: 20px;
+    width: 100px;
+    background: rgb(235, 230, 224);
+    color: black;
+    transition: 0.2s;
+    font-weight: 600;
+    border: unset;
+    margin-top: 2vh;
+  }
+  
+  .btn:hover {
+    background-color: rgb(221, 0, 0);
+    color: rgb(235, 230, 224);
+  }
+  #info p{margin-top: 1.5vh;
+width: 40vw;}
+
+
+  #newSerie{
+margin-top: 4vh;
+      display: flex;
+      flex-direction: row;
+justify-content: space-around;
+  }
